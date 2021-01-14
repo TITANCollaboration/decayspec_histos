@@ -22,7 +22,10 @@ def parse_and_run(args):
     else:
         title = args.plot_title
     myhist = hist_gen(args.channel_num, args.max_pulse_height, args.min_pulse_height, bin_number, title, args.xlabel, args.ylabel)
-    myhist.create_single_chan_histogram(mydata_df)
+    if args.channel_num is None:
+        myhist.create_multi_chan_histogram(mydata_df)
+    else:
+        myhist.create_single_chan_histogram(mydata_df)
     return
 
 
@@ -32,11 +35,11 @@ def main():
 
     parser.add_argument('--data_file', dest='input_filename', required=True,
                         help="path to data file from mds_sort")
-    parser.add_argument('--chan', dest='channel_num', type=int, required=True,  # wont' require forever..
+    parser.add_argument('--chan', dest='channel_num', type=int, required=False,  # wont' require forever..
                         help="channel to graph")
-    parser.add_argument('--max_pulse_height', dest='max_pulse_height', type=int, default=65536, required=False,  # wont' require forever..
+    parser.add_argument('--xmax', dest='max_pulse_height', type=int, default=65536, required=False,  # wont' require forever..
                         help="Max Pulse Height")
-    parser.add_argument('--min_pulse_height', dest='min_pulse_height', type=int, default=0, required=False,  # wont' require forever..
+    parser.add_argument('--xmin', dest='min_pulse_height', type=int, default=0, required=False,  # wont' require forever..
                         help="Min Pulse Height")
     parser.add_argument('--nbins', dest='bin_number', type=int, default=1000, required=False,  # wont' require forever..
                         help="Number of bins, will default to the smaller of 1000 or max_pulse_height - min_pulse_height")
