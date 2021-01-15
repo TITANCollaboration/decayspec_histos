@@ -20,5 +20,5 @@ class input_handler:
         except:
             print("Something went wrong reading in file :", self.input_filename)
             exit(1)
-        print(self.mydata_df)
+        #print(self.mydata_df)
         return 0

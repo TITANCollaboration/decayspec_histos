@@ -35,8 +35,8 @@ def main():
 
     parser.add_argument('--data_file', dest='input_filename', required=True,
                         help="path to data file from mds_sort")
-    parser.add_argument('--chan', dest='channel_num', type=int, required=False,  # wont' require forever..
-                        help="channel to graph")
+    parser.add_argument('--chan', dest='channel_num', nargs='+', type=int, required=False,  # wont' require forever..
+                        help="channel or list of channels to graph --chan 0 1 3")
     parser.add_argument('--xmax', dest='max_pulse_height', type=int, default=65536, required=False,  # wont' require forever..
                         help="Max Pulse Height")
     parser.add_argument('--xmin', dest='min_pulse_height', type=int, default=0, required=False,  # wont' require forever..
@@ -55,7 +55,6 @@ def main():
     args, unknown = parser.parse_known_args()
 
     parse_and_run(args)
-
 
 if __name__ == "__main__":
     main()

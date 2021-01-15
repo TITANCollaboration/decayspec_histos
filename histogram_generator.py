@@ -35,7 +35,6 @@ class hist_gen:
         return 0
 
     def create_multi_chan_histogram(self, mydata_df):
-        #self.find_unique_channels(mydata_df)
         self.fig, self.axes = plt.subplots(num=None, figsize=(16, 12), dpi=80, facecolor='w', edgecolor='k') # nrows=self.grid_rows, ncols=self.grid_columns,
 
         mydata_df[(mydata_df['flags'] == self.flags) &
@@ -49,11 +48,11 @@ class hist_gen:
 
     def create_single_chan_histogram(self, mydata_df):
         self.fig, self.axes = plt.subplots(num=None, figsize=(16, 12), dpi=80, facecolor='w', edgecolor='k') #sharex=True, sharey=True, nrows=1, ncols=1)
-        mydata_df[(mydata_df['chan'] == int(self.chan)) &
+        mydata_df[(mydata_df['chan'].isin(self.chan)) &
                   (mydata_df['flags'] == self.flags) &
                   (mydata_df['pulse_height'] > self.min_pulse_height) &
-                  (mydata_df['pulse_height'] < self.max_pulse_height)].hist(column='pulse_height', figsize=(20, 20), bins=self.bins, ax=self.axes)
-        plt.title(self.title + ' chan: ' + str(self.chan))
+                  (mydata_df['pulse_height'] < self.max_pulse_height)].hist(column='pulse_height', by='chan', figsize=(20, 20), bins=self.bins, ax=self.axes)
+        plt.title(self.title + ' chan: ' + str(self.chan[0]))
         plt.xlabel(self.xlabel)
         plt.ylabel(self.ylabel)
         plt.show()
